@@ -35,6 +35,6 @@ node {
                 //    docker build -t "${env.IMAGE_TAG}" .
                 //    docker push "${env.IMAGE_TAG}"
                // """
-            }
-       }
+}
+       
    
