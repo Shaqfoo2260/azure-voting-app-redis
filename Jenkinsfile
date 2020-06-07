@@ -15,14 +15,24 @@ node {
         imageName="azure-voting-app-redis:${params.Branch}"
         echo "${imageName}"
         env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
-        withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
-            dir('target') {
+        sh """
+              cd azure-vote/
+               docker images -a
+               docker build -t jenkins-pipeline .
+               docker images -a
+               cd ..
+        """
+        
+        //withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
+           
+          //  dir('target') {
             
-                sh """
-                    cp -f ../azure-vote/Dockerfile .
-                    docker build -t "${env.IMAGE_TAG}" .
-                    docker push "${env.IMAGE_TAG}"
-                """
+            //    sh """
+             //   cd azure-vote/
+               //     cp -f ../azure-vote/Dockerfile .
+                //    docker build -t "${env.IMAGE_TAG}" .
+                //    docker push "${env.IMAGE_TAG}"
+               // """
             }
        }
      }
