@@ -1,4 +1,4 @@
-properties([parameters([choice(choices: 'master\nfeature-green\nfeature-blue', description: 'Select branch to build', name: 'Branch')])])
+properties([parameters([choice(choices: 'master\nblue\ngreen', description: 'Select branch to build', name: 'Branch')])])
  
 node {
  stage('Scm Checkout'){
