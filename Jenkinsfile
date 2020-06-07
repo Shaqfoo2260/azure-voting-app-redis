@@ -1,24 +1,5 @@
-  
-pipeline {
-     agent any
-     stages {
-          stage('Verify Branch') {
-               steps {
-                    echo "$GIT_BRANCH"
-               }
-          }
-          stage('Docker Build'){
-              steps{
-               sh(script: 'docker images -a') 
-               sh(script: """
-               cd azure-vote/
-               docker images -a
-               docker build -t jflabsvotingapp .
-               docker images -a
-               cd ..
-               """)
-              }
-       }
-         
-     }
+properties([parameters([choice(choices: 'master\nfeature-green\nfeature-blue', description: 'Select branch to build', name: 'Branches')])])
+ 
+node {
+
 }
