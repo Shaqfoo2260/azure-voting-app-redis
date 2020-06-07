@@ -17,9 +17,9 @@ node {
         env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
         withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
             dir('target') {
-              echo "${dir}"
+            
                 sh """
-                    cp -f azure-vote/Dockerfile .
+                    cp -f /azure-vote/Dockerfile .
                     docker build -t "${env.IMAGE_TAG}" .
                     docker push "${env.IMAGE_TAG}"
                 """
