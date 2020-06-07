@@ -16,11 +16,12 @@ node {
         echo "${imageName}"
         env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
         withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
-	 sh """
+			sh """
               cd azure-vote/
                docker images -a
                docker build -t "${env.IMAGE_TAG}" .
                docker push "${env.IMAGE_TAG}"
+			 """
                }
       
 	}
