@@ -15,5 +15,14 @@ node {
         echo "${dockerRegistry}"
         imageName="azure-voting-app-redis:${params.Branch}"
         echo "${imageName}"
+        withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
+            dir('target') {
+                sh """
+                    cp -f ../deploy/aks/Dockerfile .
+                    docker build -t "${env.IMAGE_TAG}" .
+                    docker push "${env.IMAGE_TAG}"
+                """
+            }
+       }
      }
 }
