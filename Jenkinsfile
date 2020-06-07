@@ -3,7 +3,6 @@ properties([parameters([choice(choices: 'master\nblue\ngreen', description: 'Sel
 
 def dockerRegistry = 'rgzanjenkinsregistry.azurecr.io'
 def imageName = ""
-env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
 def dockerCredentialId = 'RGZANJenkinsRegistry' 
 node {
  stage('Scm Checkout'){
@@ -15,10 +14,11 @@ node {
         echo "${dockerRegistry}"
         imageName="azure-voting-app-redis:${params.Branch}"
         echo "${imageName}"
+        env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
         withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
             dir('target') {
                 sh """
-                    cp -f ../deploy/aks/Dockerfile .
+                    cp -f ../azure-vote/Dockerfile .
                     docker build -t "${env.IMAGE_TAG}" .
                     docker push "${env.IMAGE_TAG}"
                 """
