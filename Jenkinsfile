@@ -18,7 +18,7 @@ node {
         withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
             dir('target') {
                 sh """
-                    cp -f ../azure-vote/Dockerfile .
+                    cp -f Dockerfile .
                     docker build -t "${env.IMAGE_TAG}" .
                     docker push "${env.IMAGE_TAG}"
                 """
