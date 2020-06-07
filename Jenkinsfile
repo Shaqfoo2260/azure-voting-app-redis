@@ -18,13 +18,15 @@ node {
         sh """
               cd azure-vote/
                docker images -a
-               docker build -t jenkins-pipeline .
+               docker build -t "${env.IMAGE_TAG}" .
                docker images -a
                cd ..
-        """
         
-        //withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
-           
+        
+        withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
+            docker push "${env.IMAGE_TAG}"
+            """
+            }
           //  dir('target') {
             
             //    sh """
