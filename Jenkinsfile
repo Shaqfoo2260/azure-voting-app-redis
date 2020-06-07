@@ -23,21 +23,18 @@ node {
                cd ..
         """
         
-        withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
-        dir('target') {
-          sh """ 
-          docker push "${env.IMAGE_TAG}"
-            """
-            }
-        }
-          //  dir('target') {
+       withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
+           
+            dir('target') {
             
-            //    sh """
+                sh """
              //   cd azure-vote/
                //     cp -f ../azure-vote/Dockerfile .
                 //    docker build -t "${env.IMAGE_TAG}" .
-                //    docker push "${env.IMAGE_TAG}"
-               // """
+                docker push "${env.IMAGE_TAG}"
+             """
+            }
+       }
 }
        
    
