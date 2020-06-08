@@ -61,12 +61,24 @@ node {
         env.TARGET_ROLE = "${params.Branch}"
 		echo "${TARGET_ROLE}"
         // clean the inactive environment
-     //  sh """
-      //      if [[ -d "/var/lib/jenkins/workspace/Todoapp@tmp/todoapp-deployment" ]] ; then
-      //        kubectl --kubeconfig=kubeconfig delete deployment "todoapp-deployment-\$TARGET_ROLE"
-      //  	fi
+      sh """
+            if [[ -d "/var/lib/jenkins/workspace/Todoapp@tmp/todoapp-deployment" ]] ; then
+              kubectl --kubeconfig=kubeconfig delete deployment "todoapp-deployment-\$TARGET_ROLE"
+        	fi
               
-        //      """
+             """
         
 	}
+	stage('Deploy') {
+        // Apply the deployments to AKS.
+        // With enableConfigSubstitution set to true, the variables ${TARGET_ROLE}, ${IMAGE_TAG}, ${KUBERNETES_SECRET_NAME}
+        // will be replaced with environment variable values
+        acsDeploy azureCredentialsId: servicePrincipalId,
+                  resourceGroupName: resourceGroup,
+                  containerService: "${aks} | AKS",
+                  configFilePaths: 'azure-vote-all-in-one-redis.yaml',
+                  enableConfigSubstitution: true,
+                  secretName: dockerRegistry,
+                  containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
+    }
 }
