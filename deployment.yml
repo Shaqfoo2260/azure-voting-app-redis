@@ -10,7 +10,7 @@ spec:
         app: azure-vote-back-${TARGET_ROLE}
     spec:
       containers:
-      - name: azure-voting-app-redis-container-${TARGET_ROLE}
+      - name: azure-vote-back-${TARGET_ROLE}
         image: ${IMAGE_TAG}
         ports:
         - containerPort: 6379
