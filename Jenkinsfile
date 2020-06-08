@@ -43,4 +43,5 @@ node {
               echo "\$current_role" >current-environment
             """
         }
+	}
 }
