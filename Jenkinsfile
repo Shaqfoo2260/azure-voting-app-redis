@@ -55,7 +55,7 @@ node {
         echo "${currentEnvironment}"
 
         // set the build name
-        echo "***************************  CURRENT: $currentEnvironment     NEW: "${params.Branch}" *****************************"
+		echo "***************************  CURRENT: $currentEnvironment     NEW: ${params.Branch} *****************************"
         //currentBuild.displayName = newEnvironment().toUpperCase() + ' ' + imageName
        // echo "${currentBuild.displayName}"
         env.TARGET_ROLE = ${params.Branch}
