@@ -15,6 +15,5 @@ spec:
         ports:
         - containerPort: 6379
           name: redis
----
       imagePullSecrets:
       - name: ${KUBERNETES_SECRET_NAME}
