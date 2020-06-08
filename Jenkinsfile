@@ -51,5 +51,22 @@ node {
               echo "\$current_role" >current-environment
             """
         }
+		 currentEnvironment = readFile('current-environment').trim()
+        echo "${currentEnvironment}"
+
+        // set the build name
+        echo "***************************  CURRENT: $currentEnvironment     NEW: "${params.Branch}" *****************************"
+        //currentBuild.displayName = newEnvironment().toUpperCase() + ' ' + imageName
+       // echo "${currentBuild.displayName}"
+        env.TARGET_ROLE = ${params.Branch}
+		echo "${TARGET_ROLE}"
+        // clean the inactive environment
+     //  sh """
+      //      if [[ -d "/var/lib/jenkins/workspace/Todoapp@tmp/todoapp-deployment" ]] ; then
+      //        kubectl --kubeconfig=kubeconfig delete deployment "todoapp-deployment-\$TARGET_ROLE"
+      //  	fi
+              
+        //      """
+        
 	}
 }
