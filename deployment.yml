@@ -1,19 +1,22 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-deployment-${TARGET_ROLE}
+  name: azure-vote-back-${TARGET_ROLE}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: azure-vote-back-${TARGET_ROLE}
   template:
     metadata:
       labels:
-        app: azure-vote-redis
-        role: ${TARGET_ROLE}
+        app: azure-vote-back-${TARGET_ROLE}
     spec:
       containers:
-      - name: azure-vote-redis-container
-        image: ${IMAGE_TAG}
+      - name: azure-vote-back-${TARGET_ROLE}
+        image: redis
         ports:
         - containerPort: 6379
+          name: redis
       imagePullSecrets:
-      - name: ${KUBERNETES_SECRET_NAME}
+      - name: ${KUBERNETES_SECRET_NAME
