@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: azure-vote-deployment-${TARGET_ROLE}
+  name: azure-voting-app-redis-${TARGET_ROLE}
 spec:
   replicas: 1
   template:
@@ -11,7 +11,7 @@ spec:
         role: ${TARGET_ROLE}
     spec:
       containers:
-      - name:azure-voting-app-redi-container
+      - name: azure-voting-app-redis-container
         image: ${IMAGE_TAG}
         ports:
         - containerPort: 8080
