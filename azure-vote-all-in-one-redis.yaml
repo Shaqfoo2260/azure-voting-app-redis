@@ -12,8 +12,6 @@ spec:
       labels:
         app: azure-vote-back-${TARGET_ROLE}
     spec:
-      nodeSelector:
-        "beta.kubernetes.io/os": linux
       containers:
       - name: azure-vote-back-${TARGET_ROLE}
         image: redis
@@ -57,12 +55,7 @@ spec:
         image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis:blue
         ports:
         - containerPort: 80
-        resources:
-          requests:
-            cpu: 250m
-          limits:
-            cpu: 500m
-        env:
+       env:
         - name: REDIS
           value: "azure-vote-back-${TARGET_ROLE}"
 ---
