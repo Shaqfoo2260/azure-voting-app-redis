@@ -19,14 +19,14 @@ spec:
         - containerPort: 6379
           name: redis
 ---
-	apiVersion: v1
-	kind: Service
-	metadata:
-	name: azure-vote-back-${TARGET_ROLE}
-	spec:
-		ports:
-		- port: 6379
-		selector:
-		app: azure-vote-back-${TARGET_ROLE}
+apiVersion: v1
+kind: Service
+metadata:
+name: azure-vote-back-${TARGET_ROLE}
+spec:
+ports:
+- port: 6379
+selector:
+app: azure-vote-back-${TARGET_ROLE}
       imagePullSecrets:
       - name: ${KUBERNETES_SECRET_NAME}
