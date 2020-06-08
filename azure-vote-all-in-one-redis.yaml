@@ -6,7 +6,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-back-${TARGET_ROLE}
+      app: azure-vote-back${TARGET_ROLE}
   template:
     metadata:
       labels:
@@ -32,9 +32,9 @@ spec:
     app: azure-vote-back-${TARGET_ROLE}
 ---
 apiVersion: apps/v1
-kind: Deployment-${TARGET_ROLE}
+kind: Deployment
 metadata:
-  name: azure-vote-front
+  name: azure-vote-front-${TARGET_ROLE}
 spec:
   replicas: 1
   selector:
@@ -54,7 +54,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: azure-vote-front-${TARGET_ROLE}
-        image: ${IMAGE_TAG}
+        image: microsoft/azure-vote-front:v1
         ports:
         - containerPort: 80
         resources:
