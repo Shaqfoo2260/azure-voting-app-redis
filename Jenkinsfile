@@ -1,5 +1,5 @@
   
-properties([parameters([choice(choices: 'master\nblue\ngreen', description: 'Select branch to build', name: 'Branch')])])
+properties([parameters([choice(choices: 'blue\ngreen', description: 'Select branch to build', name: 'Branch')])])
 
 def dockerRegistry = 'rgzanjenkinsregistry.azurecr.io'
 def imageName = ""
@@ -25,4 +25,22 @@ node {
                }
       
 	}
+	stage('Check Env') {
+        // check the current active environment to determine the inactive one that will be deployed to
+
+        withCredentials([azureServicePrincipal(servicePrincipalId)]) {
+            // fetch the current service configuration
+            sh """
+              az login --service-principal -u "\$AZURE_CLIENT_ID" -p "\$AZURE_CLIENT_SECRET" -t "\$AZURE_TENANT_ID"
+              az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
+              az aks get-credentials --resource-group "${resourceGroup}" --name "${aks}" --admin --file kubeconfig
+              az logout
+              current_role="\$(kubectl --kubeconfig kubeconfig get services todoapp-service --output json | jq -r .spec.selector.role)"
+              if [ "\$current_role" = null ]; then
+                  echo "Unable to determine current environment"
+                  exit 1
+              fi
+              echo "\$current_role" >current-environment
+            """
+        }
 }
