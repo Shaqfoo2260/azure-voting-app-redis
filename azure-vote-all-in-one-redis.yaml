@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-back
+  name: azure-vote-back-${TARGET_ROLE}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-back
+      app: azure-vote-back-${TARGET_ROLE}
   template:
     metadata:
       labels:
-        app: azure-vote-back
+        app: azure-vote-back-${TARGET_ROLE}
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-back
+      - name: azure-vote-back-${TARGET_ROLE}
         image: redis
         ports:
         - containerPort: 6379
@@ -24,22 +24,22 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-back
+  name: azure-vote-back-${TARGET_ROLE}
 spec:
   ports:
   - port: 6379
   selector:
-    app: azure-vote-back
+    app: azure-vote-back-${TARGET_ROLE}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-front
+  name: azure-vote-front-${TARGET_ROLE}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-front
+      app: azure-vote-front-${TARGET_ROLE}
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -48,12 +48,12 @@ spec:
   template:
     metadata:
       labels:
-        app: azure-vote-front
+        app: azure-vote-front-${TARGET_ROLE}
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-front
+      - name: azure-vote-front-${TARGET_ROLE}
         image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis:blue
         ports:
         - containerPort: 80
@@ -64,15 +64,15 @@ spec:
             cpu: 500m
         env:
         - name: REDIS
-          value: "azure-vote-back"
+          value: "azure-vote-back-${TARGET_ROLE}"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-front
+  name: azure-vote-front-${TARGET_ROLE}
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: azure-vote-front
+    app: azure-vote-front-${TARGET_ROLE}
