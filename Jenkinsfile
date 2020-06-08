@@ -76,7 +76,7 @@ node {
         acsDeploy azureCredentialsId: servicePrincipalId,
                   resourceGroupName: resourceGroup,
                   containerService: "${aks} | AKS",
-                  configFilePaths: 'azure-vote-all-in-one-redis.yaml',
+                  configFilePaths: 'deployment.yml',
                   enableConfigSubstitution: true,
                   secretName: dockerRegistry,
                   containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
