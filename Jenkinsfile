@@ -76,7 +76,7 @@ echo "Pulling changes from the branch ${params.Branch}"
         acsDeploy azureCredentialsId: servicePrincipalId,
                   resourceGroupName: resourceGroup,
                   containerService: "${aks} | AKS",
-                  configFilePaths: 'azure-vote-all-in-one-redis.yaml',
+                  configFilePaths: "**/*.yaml",
                   enableConfigSubstitution: true,
                   secretName: dockerRegistry,
                   containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
