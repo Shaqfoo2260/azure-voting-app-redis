@@ -1,3 +1,4 @@
+node {
 properties([parameters([choice(choices: 'blue\ngreen', description: 'Select branch to build', name: 'Branch')])])
 def servicePrincipalId = 'Jenkins_Kubernetes_Account'
 def resourceGroup = 'RG-ZAN-Dev'
@@ -11,9 +12,9 @@ def dockerRegistry = 'rgzanjenkinsregistry.azurecr.io'
 def imageName = ""
 def dockerCredentialId = 'RGZANJenkinsRegistry' 
 
-node {
+echo "Pulling changes from the branch ${params.Branch}"
  stage('Scm Checkout'){
-  echo "Pulling changes from the branch ${params.Branch}"
+  
   git url : 'https://github.com/Shaqfoo2260/azure-voting-app-redis', branch: "${params.Branch}"
   }
  stage('Docker Image Build'){
