@@ -43,7 +43,7 @@ echo "Pulling changes from the branch ${params.Branch}"
               az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
               az aks get-credentials --resource-group "${resourceGroup}" --name "${aks}" --admin --file kubeconfig  --overwrite-existing
               az logout
-              current_role="\$(kubectl --kubeconfig kubeconfig get services todoapp-service --output json | jq -r .spec.selector.role)"
+              current_role="\$(kubectl --kubeconfig kubeconfig get services cputdemoapp-service --output json | jq -r .spec.selector.role)"
               if [ "\$current_role" = null ]; then
                   echo "Unable to determine current environment"
                   exit 1
@@ -61,24 +61,24 @@ echo "Pulling changes from the branch ${params.Branch}"
         env.TARGET_ROLE = "${params.Branch}"
 		echo "${TARGET_ROLE}"
         // clean the inactive environment
-      sh """
-            if [[ -d "/var/lib/jenkins/workspace/azure-vote-back@tmp/todoapp-deployment" ]] ; then
-              kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-back-deployment-\$TARGET_ROLE"
-        	fi
+    //  sh """
+      //      if [[ -d "/var/lib/jenkins/workspace/azure-vote-back@tmp/todoapp-deployment" ]] ; then
+        //      kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-back-deployment-\$TARGET_ROLE"
+       // 	fi
               
-             """
+        //     """
         
 	}
-	stage('Deploy') {
+//	stage('Deploy') {
         // Apply the deployments to AKS.
         // With enableConfigSubstitution set to true, the variables ${TARGET_ROLE}, ${IMAGE_TAG}, ${KUBERNETES_SECRET_NAME}
         // will be replaced with environment variable values
-        acsDeploy azureCredentialsId: servicePrincipalId,
-                  resourceGroupName: resourceGroup,
-                  containerService: "${aks} | AKS",
-                  configFilePaths: "azure-vote-all-in-one-redis.yaml",
-                  enableConfigSubstitution: true,
-                  secretName: dockerRegistry,
-                  containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
-    }
+  //      acsDeploy azureCredentialsId: servicePrincipalId,
+    //              resourceGroupName: resourceGroup,
+      //            containerService: "${aks} | AKS",
+        //          configFilePaths: "azure-vote-all-in-one-redis.yaml",
+          //        enableConfigSubstitution: true,
+            //      secretName: dockerRegistry,
+              //    containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
+    //}
 }
