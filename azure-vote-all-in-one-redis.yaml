@@ -68,3 +68,5 @@ spec:
   - port: 80
   selector:
     app: azure-vote-front
+      imagePullSecrets:
+      - name: ${KUBERNETES_SECRET_NAME}
