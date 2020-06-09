@@ -4,7 +4,7 @@ kind: Deployment
 
 metadata:
 
-  name: azure-vote-back
+  name: azure-vote-back-"${params.Branch}"
 
 spec:
 
@@ -14,7 +14,7 @@ spec:
 
     matchLabels:
 
-      app: azure-vote-back
+      app: azure-vote-back-"${params.Branch}"
 
   template:
 
@@ -114,7 +114,7 @@ spec:
 
       - name: azure-vote-front
 
-        image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis:blue
+        image: "${env.IMAGE_TAG}"
 
         resources:
 
