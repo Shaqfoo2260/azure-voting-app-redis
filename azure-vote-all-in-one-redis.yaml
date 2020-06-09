@@ -56,7 +56,7 @@ spec:
       - name: azure-vote-front-green
         image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis:green
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
           requests:
             cpu: 250m
@@ -69,12 +69,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cputdemoapp-test-green 
+  name: azure-vote-front-green
 spec:
   type: LoadBalancer
-       ports:
-      - port: 80
+  ports:
+  - port: 80
   selector:
-    app: cputdemoapp-test-green 
-    targetPort: 8080
-    
+    app: azure-vote-front-green
+    targetport: 8080
