@@ -81,7 +81,7 @@ echo "Pulling changes from the branch ${params.Branch}"
                   secretName: dockerRegistry,
                   containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
     }
-	   def verifyEnvironment = { service ->
+	       def verifyEnvironment = { service ->
         sh """
           endpoint_ip="\$(kubectl --kubeconfig=kubeconfig get services '${service}' --output json | jq -r '.status.loadBalancer.ingress[0].ip')"
           count=0
@@ -98,15 +98,7 @@ echo "Pulling changes from the branch ${params.Branch}"
               sleep 10
           done
         """
+    
     }
-	
-	   stage('Verify green environment') {
-        // verify the green environment is working properly
-        verifyEnvironment('cputdemoapp-test-green')
-    }
-	stage('Post-clean') {
-        sh '''
-          rm -f kubeconfig
-        '''
-    }
+
 }
