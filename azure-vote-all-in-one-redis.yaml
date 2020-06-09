@@ -6,12 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-back-${TARGET_ROLE}
+      app: azure-vote-back${TARGET_ROLE}
   template:
     metadata:
       labels:
         app: azure-vote-back-${TARGET_ROLE}
     spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
       containers:
       - name: azure-vote-back-${TARGET_ROLE}
         image: redis
@@ -38,11 +40,6 @@ spec:
   selector:
     matchLabels:
       app: azure-vote-front-${TARGET_ROLE}
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5 
   template:
     metadata:
       labels:
@@ -52,12 +49,12 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: azure-vote-front-${TARGET_ROLE}
-        image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis:blue
+        image: microsoft/azure-vote-front:v1
         ports:
         - containerPort: 80
-       env:
+        env:
         - name: REDIS
-          value: "azure-vote-back-${TARGET_ROLE}"
+          value: "azure-vote-back"
 ---
 apiVersion: v1
 kind: Service
