@@ -114,7 +114,7 @@ spec:
 
       - name: azure-vote-front
 
-        image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis:green
+        image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis:blue
 
         resources:
 
