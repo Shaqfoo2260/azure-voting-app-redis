@@ -6,16 +6,17 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-back${TARGET_ROLE}
+      app: azure-vote-back
   template:
     metadata:
       labels:
-        app: azure-vote-back-${TARGET_ROLE}
+        app: azure-vote-back
+        role: ${TARGET_ROLE}
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-back-${TARGET_ROLE}
+      - name: azure-vote-back
         image: redis
         ports:
         - containerPort: 6379
@@ -29,7 +30,7 @@ spec:
   ports:
   - port: 6379
   selector:
-    app: azure-vote-back-${TARGET_ROLE}
+    app: azure-vote-back
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,16 +40,17 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-front-${TARGET_ROLE}
+      app: azure-vote-front
   template:
     metadata:
       labels:
-        app: azure-vote-front-${TARGET_ROLE}
+        app: azure-vote-front
+        role: ${TARGET_ROLE}
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-front-${TARGET_ROLE}
+      - name: azure-vote-front
         image: ${IMAGE_TAG}
         ports:
         - containerPort: 80
@@ -65,4 +67,4 @@ spec:
   ports:
   - port: 80
   selector:
-    app: azure-vote-front-${TARGET_ROLE}
+    app: azure-vote-front
