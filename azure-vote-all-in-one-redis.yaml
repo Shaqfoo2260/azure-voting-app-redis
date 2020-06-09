@@ -4,7 +4,7 @@ kind: Deployment
 
 metadata:
 
-  name: azure-vote-back-"${params.Branch}"
+  name: azure-vote-back
 
 spec:
 
@@ -14,7 +14,7 @@ spec:
 
     matchLabels:
 
-      app: azure-vote-back-"${params.Branch}"
+      app: azure-vote-back
 
   template:
 
