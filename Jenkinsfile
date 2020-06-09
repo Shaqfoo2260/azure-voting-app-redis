@@ -82,4 +82,3 @@ echo "Pulling changes from the branch ${params.Branch}"
                   containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
     }
 }
-© 2020 GitHub, Inc.
