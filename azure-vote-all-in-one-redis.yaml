@@ -52,8 +52,6 @@ spec:
       containers:
       - name: azure-vote-front
         image: ${IMAGE_TAG}
-        imagePullSecrets:
-      - name: ${KUBERNETES_SECRET_NAME}
         ports:
         - containerPort: 80
         env:
