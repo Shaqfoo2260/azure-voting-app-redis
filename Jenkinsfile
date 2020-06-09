@@ -38,7 +38,7 @@ echo "Pulling changes from the branch ${params.Branch}"
 
         withCredentials([azureServicePrincipal(servicePrincipalId)]) {
            // // fetch the current service configuration
-          //  sh """
+          sh """
              az login --service-principal -u "\$AZURE_CLIENT_ID" -p "\$AZURE_CLIENT_SECRET" -t "\$AZURE_TENANT_ID"
               az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
              az aks get-credentials --resource-group "${resourceGroup}" --name "${aks}" --admin --file kubeconfig  --overwrite-existing
