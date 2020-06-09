@@ -49,7 +49,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: azure-vote-front-${TARGET_ROLE}
-        image: microsoft/azure-vote-front:v1
+        image: ${IMAGE_TAG}
         ports:
         - containerPort: 80
         env:
