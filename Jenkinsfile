@@ -1,4 +1,5 @@
   
+node {
 properties([parameters([choice(choices: 'blue\ngreen', description: 'Select branch to build', name: 'Branch')])])
 def servicePrincipalId = 'Jenkins_Kubernetes_Account'
 def resourceGroup = 'RG-ZAN-Dev'
@@ -12,9 +13,10 @@ def dockerRegistry = 'rgzanjenkinsregistry.azurecr.io'
 def imageName = ""
 def dockerCredentialId = 'RGZANJenkinsRegistry' 
 
-node {
+echo "Pulling changes from the branch ${params.Branch}"
+
  stage('Scm Checkout'){
-  echo "Pulling changes from the branch ${params.Branch}"
+  
   git url : 'https://github.com/Shaqfoo2260/azure-voting-app-redis', branch: "${params.Branch}"
   }
  stage('Docker Image Build'){
@@ -43,7 +45,7 @@ node {
               az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
               az aks get-credentials --resource-group "${resourceGroup}" --name "${aks}" --admin --file kubeconfig  --overwrite-existing
               az logout
-              current_role="\$(kubectl --kubeconfig kubeconfig get services todoapp-service --output json | jq -r .spec.selector.role)"
+              current_role="\$(kubectl --kubeconfig kubeconfig get services azure-vote-front --output json | jq -r .spec.selector.role)"
               if [ "\$current_role" = null ]; then
                   echo "Unable to determine current environment"
                   exit 1
