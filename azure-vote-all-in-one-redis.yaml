@@ -72,8 +72,9 @@ metadata:
   name: cputdemoapp-test-green 
 spec:
   type: LoadBalancer
-  ports:
-  - port: 80
-  targetPort: 8080
   selector:
     app: cputdemoapp-test-green 
+      ports:
+      - port: 80
+        targetPort: 8080
+    
