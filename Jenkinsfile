@@ -22,7 +22,7 @@ echo "Pulling changes from the branch ${params.Branch}"
         echo "${dockerRegistry}"
         imageName="azure-voting-app-redis:${params.Branch}"
         echo "${imageName}"
-        env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
+	 env.IMAGE_TAG = "${dockerRegistry}/${imageName}:${BUILD_NUMBER}"
         withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
 			sh """
               cd azure-vote/
