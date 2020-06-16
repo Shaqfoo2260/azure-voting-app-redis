@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: azure-vote-front-green
-        image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis-green:${BUILD_NUMBER}
+        image: "${env.IMAGE_TAG}"
         ports:
         - containerPort: 80
         env:
