@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: azure-vote-front-green
-        image: docker pull rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis-green:${BUILD_NUMBER}
+        image: rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis-green:${BUILD_NUMBER}
         ports:
         - containerPort: 80
         env:
