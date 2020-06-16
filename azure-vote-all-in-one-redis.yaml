@@ -54,7 +54,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: azure-vote-front-${TARGET_ROLE}
-        image: microsoft/azure-vote-front:v1
+        image: docker pull rgzanjenkinsregistry.azurecr.io/azure-voting-app-redis-green:${BUILD_NUMBER}
         ports:
         - containerPort: 80
         resources:
