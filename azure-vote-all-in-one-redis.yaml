@@ -3,8 +3,7 @@ kind: Deployment
 metadata:
   name: azure-vote-back-green
 spec:
-  replicas: 1
-  selector:
+   selector:
     matchLabels:
       app: azure-vote-back-green
   template:
@@ -36,7 +35,7 @@ kind: Deployment
 metadata:
   name: azure-vote-front-green
 spec:
-  replicas: 1
+  
   selector:
     matchLabels:
       app: azure-vote-front-green
