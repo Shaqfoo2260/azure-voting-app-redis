@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: azure-vote-front-green
-        image: microsoft/azure-vote-front:v1
+        image: ${IMAGE_TAG}
         ports:
         - containerPort: 80
         env:
