@@ -31,7 +31,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-front-${params.Branch}
+  name: azure-vote-front-green
 spec:
   selector:
     matchLabels:
