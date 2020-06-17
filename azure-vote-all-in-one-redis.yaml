@@ -16,7 +16,7 @@ spec:
         image: redis
         ports:
         - containerPort: 6379
-          name: redis
+          name: redis-green
 ---
 apiVersion: v1
 kind: Service
