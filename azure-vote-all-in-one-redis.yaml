@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: azure-vote-back-blue
-        image: redis
+        image: rgzanjenkinsregistry.azurecr.io/redis-test:v1
         ports:
         - containerPort: 6379
           name: redis-blue
