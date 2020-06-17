@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: azure-vote-back-green
-        image: redis
+        image: gzanjenkinsregistry.azurecr.io/redis:latest
         ports:
         - containerPort: 6379
           name: redis-green
