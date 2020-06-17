@@ -1,69 +1,82 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-back-blue
+  name: azure-vote-back
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-back-blue
+      app: azure-vote-back
   template:
     metadata:
       labels:
-        app: azure-vote-back-blue
+        app: azure-vote-back
     spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-back-blue
-        image: rgzanjenkinsregistry.azurecr.io/redis-test:v1
+      - name: azure-vote-back
+        image: redis
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
         ports:
         - containerPort: 6379
-          name: redis-blue
+          name: redis
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-back-blue
+  name: azure-vote-back
 spec:
   ports:
   - port: 6379
   selector:
-    app: azure-vote-back-blue
+    app: azure-vote-back
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-front-blue
+  name: azure-vote-front
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: azure-vote-front-blue
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5 
+      app: azure-vote-front
   template:
     metadata:
       labels:
-        app: azure-vote-front-blue
+        app: azure-vote-front
     spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-front-blue
-        image: ${IMAGE_TAG}
+      - name: azure-vote-front
+        image: microsoft/azure-vote-front:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
         ports:
         - containerPort: 80
         env:
         - name: REDIS
-          value: "azure-vote-back-blue"
+          value: "azure-vote-back"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-front-blue
-  annotations:
-   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  name: azure-vote-front
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: azure-vote-front-blue
+    app: azure-vote-front
