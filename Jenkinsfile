@@ -20,9 +20,9 @@ echo "Pulling changes from the branch ${params.Branch}"
  stage('Docker Image Build'){
             echo "${dockerCredentialId}"
         echo "${dockerRegistry}"
-        imageName="azure-voting-app-redis:${params.Branch}"
+        imageName="azure-voting-app-redis-${params.Branch}"
         echo "${imageName}"
-        env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
+	 env.IMAGE_TAG = "${dockerRegistry}/${imageName}:${BUILD_NUMBER}"
         withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
 			sh """
               cd azure-vote/
@@ -43,30 +43,31 @@ echo "Pulling changes from the branch ${params.Branch}"
               az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
               az aks get-credentials --resource-group "${resourceGroup}" --name "${aks}" --admin --file kubeconfig  --overwrite-existing
               az logout
-              current_role="\$(kubectl --kubeconfig kubeconfig get services todoapp-service --output json | jq -r .spec.selector.role)"
-              if [ "\$current_role" = null ]; then
-                  echo "Unable to determine current environment"
-                  exit 1
-              fi
-              echo "\$current_role" >current-environment
-            """
-        }
-		 currentEnvironment = readFile('current-environment').trim()
-        echo "${currentEnvironment}"
+	            """
+        }	
+//   current_role="\$(kubectl --kubeconfig kubeconfig get services todoapp-service --output json | jq -r .spec.selector.role)"
+           //   if [ "\$current_role" = null ]; then
+           //       echo "Unable to determine current environment"
+           //       exit 1
+           //   fi
+           //   echo "\$current_role" >current-environment
+
+	//	 currentEnvironment = readFile('current-environment').trim()
+       // echo "${currentEnvironment}"
 
         // set the build name
-		echo "***************************  CURRENT: $currentEnvironment     NEW: ${params.Branch} *****************************"
+	//	echo "***************************  CURRENT: $currentEnvironment     NEW: ${params.Branch} *****************************"
         //currentBuild.displayName = newEnvironment().toUpperCase() + ' ' + imageName
        // echo "${currentBuild.displayName}"
-        env.TARGET_ROLE = "${params.Branch}"
-		echo "${TARGET_ROLE}"
+       // env.TARGET_ROLE = "${params.Branch}"
+	//	echo "${TARGET_ROLE}"
         // clean the inactive environment
-      sh """
-            if [[ -d "/var/lib/jenkins/workspace/azure-vote-back@tmp/todoapp-deployment" ]] ; then
-              kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-back-deployment-\$TARGET_ROLE"
-        	fi
+    //  sh """
+      //      if [[ -d "/var/lib/jenkins/workspace/azure-vote-back@tmp/todoapp-deployment" ]] ; then
+        //      kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-back-deployment-\$TARGET_ROLE"
+        //	fi
               
-             """
+         //    """
         
 	}
 	stage('Deploy') {
