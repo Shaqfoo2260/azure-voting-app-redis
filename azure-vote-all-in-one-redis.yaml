@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-back-green
+  name: azure-vote-back
 spec:
   selector:
     matchLabels:
-      app: azure-vote-back-green
+      app: azure-vote-back
   template:
     metadata:
       labels:
-        app: azure-vote-back-green
+        app: azure-vote-back
     spec:
       containers:
-      - name: azure-vote-back-green
+      - name: azure-vote-back
         image: redis
         ports:
         - containerPort: 6379
@@ -21,21 +21,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-back-green
+  name: azure-vote-back
 spec:
   ports:
   - port: 6379
   selector:
-    app: azure-vote-back-green
+    app: azure-vote-back
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-front-green
+  name: azure-vote-front
 spec:
   selector:
     matchLabels:
-      app: azure-vote-front-green
+      app: azure-vote-front
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -44,11 +44,11 @@ spec:
   template:
     metadata:
       labels:
-        app: azure-vote-front-green
+        app: azure-vote-front
     spec:
       containers:
-      - name: azure-vote-front-green
-        image: microsoft/azure-vote-front:v1
+      - name: azure-vote-front
+        image: ${IMAGE_TAG}
         ports:
         - containerPort: 80
         env:
@@ -58,10 +58,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-front-green
+  name: azure-vote-front
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: azure-vote-front-green
+    app: azure-vote-front
