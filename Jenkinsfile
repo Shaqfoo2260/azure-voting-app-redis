@@ -64,8 +64,8 @@ echo "Pulling changes from the branch ${params.Branch}"
 		echo "${TARGET_ROLE}"
         // clean the inactive environment
       sh """
-            if [[ -d "/var/lib/jenkins/workspace/Todoapp@tmp/todoapp-deployment" ]] ; then
-              kubectl --kubeconfig=kubeconfig delete deployment "todoapp-deployment-\$TARGET_ROLE"
+            if [[ -d " /var/lib/jenkins/workspace/Test" ]] ; then
+              kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-all-in-one-redis.yaml"
         	fi
               
              """
