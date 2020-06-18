@@ -62,12 +62,12 @@ echo "Pulling changes from the branch ${params.Branch}"
        // env.TARGET_ROLE = "${params.Branch}"
 	//	echo "${TARGET_ROLE}"
         // clean the inactive environment
-    //  sh """
-      //      if [[ -d "/var/lib/jenkins/workspace/azure-vote-back@tmp/todoapp-deployment" ]] ; then
-        //      kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-back-deployment-\$TARGET_ROLE"
-        //	fi
+    		sh """
+		if [[ -d " /var/lib/jenkins/workspace/Test" ]] ; then
+              		kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-all-in-one-redis.yaml"
+        	fi
               
-         //    """
+             """
         
 	}
 	stage('Deploy') {
