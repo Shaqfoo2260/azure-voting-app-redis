@@ -17,23 +17,7 @@ echo "Pulling changes from the branch ${params.Branch}"
   
   git url : 'https://github.com/Shaqfoo2260/azure-voting-app-redis', branch: "${params.Branch}"
   }
- stage('Docker Image Build'){
-            echo "${dockerCredentialId}"
-        echo "${dockerRegistry}"
-        imageName="azure-voting-app-redis-${params.Branch}"
-        echo "${imageName}"
-	 env.IMAGE_TAG = "${dockerRegistry}/${imageName}:${BUILD_NUMBER}"
-        withDockerRegistry([credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]) {
-			sh """
-              cd azure-vote/
-               docker images -a
-               docker build -t "${env.IMAGE_TAG}" .
-               docker push "${env.IMAGE_TAG}"
-			 """
-               }
-      
-	}
-	stage('Check Env') {
+ stage('Check Env') {
         // check the current active environment to determine the inactive one that will be deployed to
 
         withCredentials([azureServicePrincipal(servicePrincipalId)]) {
