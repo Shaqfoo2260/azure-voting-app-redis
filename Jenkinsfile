@@ -62,12 +62,12 @@ echo "Pulling changes from the branch ${params.Branch}"
        // env.TARGET_ROLE = "${params.Branch}"
 	//	echo "${TARGET_ROLE}"
         // clean the inactive environment
-    		sh """
-		if [ -d '/var/lib/jenkins/workspace/Test/' ]
-		then
-  		rm * -r -f
-		fi
-               """
+    		//sh """
+		//if [ -d '/var/lib/jenkins/workspace/Test/' ]
+		//then
+  		//rm * -r -f
+		//fi
+              // """
         
 	}
 	stage('Deploy') {
