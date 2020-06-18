@@ -52,7 +52,7 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: REDIS
+        - name: SIMPLE_SERVICE_VERSION
           value: "${BUILD_NUMBER}"
 ---
 apiVersion: v1
