@@ -53,7 +53,7 @@ spec:
         - containerPort: 80
         env:
         - name: REDIS
-          value: "azure-vote-back-green"
+          value: "${BUILD_NUMBER}"
 ---
 apiVersion: v1
 kind: Service
