@@ -9,7 +9,7 @@ def cosmosDbName = 'jenkinsdemocosmosdb'
 def dbName = 'todoapp'
 
 def dockerRegistry = 'rgzanjenkinsregistry.azurecr.io'
-def imageName = "rgzanjenkinsregistry.azurecr.io/redis:latest"
+env.imageName = "rgzanjenkinsregistry.azurecr.io/redis:latest"
 def dockerCredentialId = 'RGZANJenkinsRegistry' 
 
 echo "Pulling changes from the branch ${params.Branch}"
