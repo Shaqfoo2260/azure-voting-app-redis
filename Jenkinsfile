@@ -43,7 +43,7 @@ echo "Pulling changes from the branch ${params.Branch}"
               az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
               az aks get-credentials --resource-group "${resourceGroup}" --name "${aks}" --admin --file kubeconfig  --overwrite-existing
               az logout
-	      current_deployment="\$(kubectl --kubeconfig kubeconfig get deployment azure-vote-back-green-"\$BUILD_NUMBER"--output json | |jq -r .spec.template.spec.containers[0].env.value)"
+	      current_deployment="\$(kubectl --kubeconfig kubeconfig get deployment azure-vote-back-green-"\$BUILD_NUMBER"--output json | jq -r .spec.template.spec.containers[0].env.value)"
       if [ "\$current_deployment" = null ]; then
 	      		echo "Unable to determine current deployment"
 			exit 1
