@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-back-green
+  name: azure-vote-back-green-${BUILD_NUMBER}
 spec:
   selector:
     matchLabels:
-      app: azure-vote-back-green
+      app: azure-vote-back-green-${BUILD_NUMBER}
   template:
     metadata:
       labels:
-        app: azure-vote-back-green
+        app: azure-vote-back-green-${BUILD_NUMBER}
     spec:
       containers:
-      - name: azure-vote-back-green
+      - name: azure-vote-back-green-${BUILD_NUMBER}
         image: ${imageNameRedis}
         ports:
         - containerPort: 6379
@@ -21,21 +21,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-back-green
+  name: azure-vote-back-green-${BUILD_NUMBER}
 spec:
   ports:
   - port: 6379
   selector:
-    app: azure-vote-back-green
+    app: azure-vote-back-green-${BUILD_NUMBER}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-vote-front-green
+  name: azure-vote-back-green-${BUILD_NUMBER}
 spec:
   selector:
     matchLabels:
-      app: azure-vote-front-green
+      app: azure-vote-back-green-${BUILD_NUMBER}
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -44,10 +44,10 @@ spec:
   template:
     metadata:
       labels:
-        app: azure-vote-front-green
+        app: azure-vote-back-green-${BUILD_NUMBER}
     spec:
       containers:
-      - name: azure-vote-front-green
+      - name: azure-vote-back-green-${BUILD_NUMBER}
         image: ${IMAGE_TAG}
         ports:
         - containerPort: 80
@@ -58,7 +58,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: azure-vote-front-green
+  name: azure-vote-back-green-${BUILD_NUMBER}
   annotations:
    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
@@ -66,4 +66,4 @@ spec:
   ports:
   - port: 80
   selector:
-    app: azure-vote-front-green
+    app: azure-vote-back-green-${BUILD_NUMBER}
