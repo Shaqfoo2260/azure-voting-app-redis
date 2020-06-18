@@ -63,11 +63,11 @@ echo "Pulling changes from the branch ${params.Branch}"
 	//	echo "${TARGET_ROLE}"
         // clean the inactive environment
     		sh """
-		if [[ -d " /var/lib/jenkins/workspace/Test" ]] ; then
-              		kubectl --kubeconfig=kubeconfig delete deployment "azure-vote-all-in-one-redis.yaml"
-        	fi
-              
-             """
+		if [ -d '/var/lib/jenkins/workspace/Test/' ]
+		then
+  		rm * -r -f
+		fi
+               """
         
 	}
 	stage('Deploy') {
