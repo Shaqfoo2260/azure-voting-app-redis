@@ -1,5 +1,5 @@
 node {
-properties([parameters([choice(choices: 'blue\ngreen', description: 'Select branch to build', name: 'Branch')])])
+properties([parameters([choice(choices: 'REDis\nblue\ngreen', description: 'Select branch to build', name: 'Branch')])])
 def servicePrincipalId = 'Jenkins_Kubernetes_Account'
 def resourceGroup = 'RG-ZAN-Dev'
 def aks = 'RG-ZAN-Dev-Jenkins-Cluster'
