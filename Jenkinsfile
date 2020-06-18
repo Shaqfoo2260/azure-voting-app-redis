@@ -43,28 +43,22 @@ echo "Pulling changes from the branch ${params.Branch}"
               az account set --subscription "\$AZURE_SUBSCRIPTION_ID"
               az aks get-credentials --resource-group "${resourceGroup}" --name "${aks}" --admin --file kubeconfig  --overwrite-existing
               az logout
-	            """
+	      current_deployment="\$(kubectl --kubeconfig kubeconfig get deployment azure-vote-back-green-"\$BUILD_NUMBER"--output json | |jq -r .spec.template.spec.containers[0].env.value)"
+      if [ "\$current_deployment" = null ]; then
+	      		echo "Unable to determine current deployment"
+			exit 1
+			fi
+		echo "\$current_deployment"
+	            """ 
         }	
 
         // clean the existing environment
-    		sh """
-		
-		BUILD_NUMBER=7
-		BUILD_NUMBER="\$((BUILD_NUMBER-1))"
-		echo BUILD_NUMBER
-		kubectl --kubeconfig=kubeconfig delete deployment azure-vote-back-green-"\$BUILD_NUMBER"
-		"""
+    	//	sh """
+	//	BUILD_NUMBER=7
+	//	BUILD_NUMBER="\$((BUILD_NUMBER-1))"
+//		echo BUILD_NUMBER
+//		kubectl --kubeconfig=kubeconfig delete deployment azure-vote-back-green-"\$BUILD_NUMBER"
+//		"""
 	}
-	stage('Deploy') {
-        // Apply the deployments to AKS.
-        // With enableConfigSubstitution set to true, the variables ${TARGET_ROLE}, ${IMAGE_TAG}, ${KUBERNETES_SECRET_NAME}
-        // will be replaced with environment variable values
-        acsDeploy azureCredentialsId: servicePrincipalId,
-                  resourceGroupName: resourceGroup,
-                  containerService: "${aks} | AKS",
-                  configFilePaths: "azure-vote-all-in-one-redis.yaml",
-                  enableConfigSubstitution: true,
-                  secretName: dockerRegistry,
-                  containerRegistryCredentials: [[credentialsId: dockerCredentialId, url: "http://${dockerRegistry}"]]
-    }
+	
 }
