@@ -47,9 +47,9 @@ echo "Pulling changes from the branch ${params.Branch}"
         }	
 
         // clean the existing environment
-    		sh """
+    		//sh """
 		//kubectl --kubeconfig=kubeconfig delete deployment azure-vote-back-green-$BUILD_NUMBER
-		"""
+		//"""
 	}
 	stage('Deploy') {
         // Apply the deployments to AKS.
