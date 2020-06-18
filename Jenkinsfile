@@ -45,30 +45,11 @@ echo "Pulling changes from the branch ${params.Branch}"
               az logout
 	            """
         }	
-//   current_role="\$(kubectl --kubeconfig kubeconfig get services todoapp-service --output json | jq -r .spec.selector.role)"
-           //   if [ "\$current_role" = null ]; then
-           //       echo "Unable to determine current environment"
-           //       exit 1
-           //   fi
-           //   echo "\$current_role" >current-environment
 
-	//	 currentEnvironment = readFile('current-environment').trim()
-       // echo "${currentEnvironment}"
-
-        // set the build name
-	//	echo "***************************  CURRENT: $currentEnvironment     NEW: ${params.Branch} *****************************"
-        //currentBuild.displayName = newEnvironment().toUpperCase() + ' ' + imageName
-       // echo "${currentBuild.displayName}"
-       // env.TARGET_ROLE = "${params.Branch}"
-	//	echo "${TARGET_ROLE}"
-        // clean the inactive environment
-    		//sh """
-		//if [ -d '/var/lib/jenkins/workspace/Test/' ]
-		//then
-  		//rm * -r -f
-		//fi
-              // """
-        
+        // clean the existing environment
+    		sh """
+		kubectl --kubeconfig=kubeconfig delete deployment azure-vote-back-green-$BUILD_NUMBER
+		"""
 	}
 	stage('Deploy') {
         // Apply the deployments to AKS.
